@@ -2,6 +2,8 @@ package com.sfsuse.fa17g16.myandroid;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
+
 /**
  * Created by Gabin on 13.03.2018.
  */
@@ -15,7 +17,8 @@ public class SearchItem {
     private String zipcode;
     private String location;
     //private Uri path;
-    private  String path;
+    //private  String id;
+    private ArrayList<String> mediaListe;
 
 
     public String getHeader() {
@@ -47,15 +50,11 @@ public class SearchItem {
     }
 
 
-    public String getPath() {
-        return path;
-    }
-
     /*public Uri getPath() {
         return path;
     }*/
 
-    public SearchItem(String header, String cost, String size, String street, String rooms, String zipcode, String location, String path) {
+    public SearchItem(String header, String cost, String size, String street, String rooms, String zipcode, String location) {
         this.header = header;
         this.cost = cost;
         this.size = size;
@@ -63,8 +62,24 @@ public class SearchItem {
         this.rooms = rooms;
         this.zipcode = zipcode;
         this.location = location;
-        this.path = path;
-
+        this.mediaListe = new ArrayList<String>();
     }
 
+    public void addMedia(String path) {
+        //to remove this line in live system "localhost"
+        String image = path.replace("localhost", Utils.HOST);
+        mediaListe.add(image);
+    }
+
+    public ArrayList<String> getMedias(){
+        return mediaListe;
+    }
+    public String getFirtImage(){
+        //return mediaListe.size() == 0 ? "":mediaListe.get(0);
+        if(mediaListe.size() == 0){
+            return "";
+        }else{
+            return mediaListe.get(0);
+        }
+    }
 }

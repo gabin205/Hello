@@ -39,9 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     Button button;
     ProgressDialog prgDialog;
     //private static String url = "http://192.168.43.174:17016/fa17g16/";
-    private static String url = "http://192.168.137.89:17016/fa17g16/";
-    //private static String baseurl = "http://192.168.137.89:17016/fa17g16/";
-    //private static String baseurl = "http://192.168.43.174:17016/fa17g16/";
+    private static String url = Utils.URL;//"http://192.168.137.89:17016/fa17g16/";
     private String adresse;
     ViewGroup mycontent;
     ListView List;
@@ -84,10 +82,8 @@ public class SearchActivity extends AppCompatActivity {
         search(params);
 
 
-        ListView list = (ListView) findViewById(R.id.simpleListView);
+        ListView listView = (ListView) findViewById(R.id.simpleListView);
 
-        //Initialisation de la liste avec les données
-        list.setAdapter(adapter);
     }
 
     /** Called when the user taps the Login button */
@@ -112,7 +108,6 @@ public class SearchActivity extends AppCompatActivity {
                 DuplicateFormatFlagsException error = null;
                 String err = error.getMessage();
                 Toast.makeText(getApplicationContext(), err, Toast.LENGTH_LONG).show();
-
             }
 
             @Override
@@ -164,20 +159,18 @@ public class SearchActivity extends AppCompatActivity {
                                 String path = mediasObject.getString("path");
                                 String estate_id = mediasObject.getString("estate_id");
                                 String created_at = mediasObject.getString("created_at");
+                                break;
                             }
 
-                            System.out.print(adresse);
                             //Toast.makeText(getApplicationContext(), header, Toast.LENGTH_LONG).show();
-                            //Toast.makeText(getApplicationContext(), size, Toast.LENGTH_LONG).show();
                         }
                     }
-                   adapter.setResult(result);
+                    adapter.setResult(result);
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //}
 
             }
 

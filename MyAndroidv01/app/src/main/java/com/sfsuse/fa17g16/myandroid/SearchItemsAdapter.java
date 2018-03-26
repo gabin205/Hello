@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +33,7 @@ import java.util.ResourceBundle;
  */
 
 public class SearchItemsAdapter extends BaseAdapter {
-    // Une liste de personnes
+    // Une liste de Maison
     private List<SearchItem> ergebnisListe;
 
     //Le contexte dans lequel est présent notre adapter
@@ -39,7 +42,6 @@ public class SearchItemsAdapter extends BaseAdapter {
     //Un mécanisme pour gérer l'affichage graphique depuis un layout XML
     private LayoutInflater mInflater;
     //private Uri path;
-    private String path;
 
     public SearchItemsAdapter(Context context) {
         mContext = context;
@@ -66,7 +68,7 @@ public class SearchItemsAdapter extends BaseAdapter {
         LinearLayout layoutItem;
         //(1) : Réutilisation des layouts
         if (convertView == null) {
-            //Initialisation de notre item à partir du  layout XML "personne_layout.xml"
+            //Initialisation de notre item à partir du  layout XML "search_item.xml"
             layoutItem = (LinearLayout) mInflater.inflate(R.layout.search_item, parent, false);
         } else {
             layoutItem = (LinearLayout) convertView;
@@ -81,7 +83,7 @@ public class SearchItemsAdapter extends BaseAdapter {
         TextView zipcode = (TextView)layoutItem.findViewById(R.id.zipcode);
         TextView location = (TextView)layoutItem.findViewById(R.id.location);
 
-        ImageView path = (ImageView)layoutItem.findViewById(R.id.path);
+        ImageView imageView = (ImageView)layoutItem.findViewById(R.id.path);
 
         //(3) : Renseignement des valeurs
         header.setText(ergebnisListe.get(position).getHeader());
@@ -92,37 +94,12 @@ public class SearchItemsAdapter extends BaseAdapter {
         zipcode.setText(ergebnisListe.get(position).getZipcode());
         location.setText(ergebnisListe.get(position).getLocation());
         //path.setImageURI(ergebnisListe.get(position).getPath());
-        //path.setImageResource(Integer.parseInt(ergebnisListe.get(position).getPath()));
-        path.setImageResource(R.drawable.homepage_logo);
-// copi la classe privee la mon fone c est etein le temps k je rallume
-
-        class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-            ImageView bmImage;
-
-            public DownloadImageTask(ImageView bmImage) {
-                this.bmImage = bmImage;
-            }
-
-            protected Bitmap doInBackground(String... urls) {
-                String urldisplay = urls[0];
-                Bitmap mIcon = null;
-                try {
-                    InputStream in = new java.net.URL(urldisplay).openStream();
-                    mIcon = BitmapFactory.decodeStream(in);
-                } catch (Exception e) {
-                    Log.e("Error", e.getMessage());
-                    e.printStackTrace();
-                }
-                return mIcon;
-            }
-
-            protected void onPostExecute(Bitmap result) {
-                bmImage.setImageBitmap(result);
-            }
+        String imagePath = ergebnisListe.get(position).getFirtImage();
+        if(imagePath.length() == 0){
+            imageView.setImageResource(R.drawable.homepage_logo);
+        }else{
+            Glide.with(mContext).load(imagePath).into(imageView);
         }
-
-
-                //profilePic.setImageURI();
 
         //On retourne l'item créé.
         return layoutItem;
@@ -150,27 +127,30 @@ public class SearchItemsAdapter extends BaseAdapter {
                 //media --> array
                 JSONArray medias = obj.getJSONArray("medias");
                 //.mediasObject.getString("path");
+
+                SearchItem item = new SearchItem(header,cost,size,street,rooms,zipcode,location);
                 for (int j = 0; j < medias.length(); j++) {
                     JSONObject mediasObject = medias.getJSONObject(j);
-                    String id = mediasObject.getString("id");
-                    String type = mediasObject.getString("type");
+                    //String id = mediasObject.getString("id");
                     String path = mediasObject.getString("path");
-                    String estate_id = mediasObject.getString("estate_id");
+                    //String estate_id = mediasObject.getString("estate_id");
+                    item.addMedia(path);
                 }
                 /*ResourceBundle mediasObject = null;
                 assert mediasObject != null;
                 String path = mediasObject.getString("path");*/
 
                 System.out.print(adresse);
-                /*Toast.makeText(getApplicationContext(), header, Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), size, Toast.LENGTH_LONG).show();*/
 
-                SearchItem item = new SearchItem(header,cost,size,street,rooms,zipcode,location,path);
-                        //new SearchItem(header, cost, rooms, size, street, zipcode, location, patch);
+                //new SearchItem(header, cost, rooms, size, street, zipcode, location, patch);
                 ergebnisListe.add(item);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<SearchItem> getErgebnisListe(){
+        return ergebnisListe;
     }
 }

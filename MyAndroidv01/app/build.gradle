@@ -27,4 +27,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:design:26.1.0'
     compile 'com.loopj.android:android-async-http:1.4.9'
+    // pour telecharger les images
+    // https://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:support-v4:26.1.0'
 }
