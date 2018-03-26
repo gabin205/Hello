@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sfsuse.fa17g16.myandroid.MainActivity">
+
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/button8"
+        app:srcCompat="@drawable/logo" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button3"
+        android:layout_alignBottom="@+id/button3"
+        android:layout_toEndOf="@+id/imageButton2"
+        android:layout_toRightOf="@+id/imageButton2"
+        android:text="@string/Home" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button8"
+        android:layout_alignBottom="@+id/button8"
+        android:layout_centerHorizontal="true"
+        android:text="@string/Agencies" />
+
+    <Button
+        android:id="@+id/button3"
+        style="@android:style/Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/button9"
+        android:layout_toRightOf="@+id/button9"
+        android:onClick="goToLogin"
+        android:text="@string/myhomepage"
+        tools:ignore="RelativeOverlap" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button3"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/your_new_home_is_waiting_to_be_found_by_using"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="52dp"
+        tools:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/searchplace"
+        android:layout_alignEnd="@+id/button9"
+        android:layout_alignRight="@+id/button9"
+        android:text="@string/where_do_you_search" />
+
+    <EditText
+        android:id="@+id/searchplace"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/textView3"
+        android:layout_alignLeft="@+id/bReset"
+        android:layout_alignStart="@+id/bReset"
+        android:layout_marginBottom="13dp"
+        android:ems="10"
+        android:hint="Enter Zipcode"
+        android:inputType="textAutoComplete|number|phone"
+        tools:ignore="UnknownId" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/maxCost"
+        android:layout_alignEnd="@+id/button8"
+        android:layout_alignRight="@+id/button8"
+        android:layout_marginBottom="26dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:text="@string/price_range" />
+
+    <EditText
+        android:id="@+id/maxCost"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/minCost"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_marginBottom="11dp"
+        android:ems="10"
+        android:hint="max"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/minCost"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/bReset"
+        android:layout_alignEnd="@+id/button8"
+        android:layout_alignRight="@+id/button8"
+        android:layout_marginBottom="27dp"
+        android:ems="10"
+        android:hint="min"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/maxSpace"
+        android:layout_alignStart="@+id/maxSpace"
+        android:text="@string/living_space_range" />
+
+    <EditText
+        android:id="@+id/maxSpace"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/maxCost"
+        android:layout_alignBottom="@+id/maxCost"
+        android:layout_alignLeft="@+id/bSearch"
+        android:layout_alignStart="@+id/bSearch"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="max"/>
+
+    <EditText
+        android:id="@+id/minSpace"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/minCost"
+        android:layout_alignBottom="@+id/minCost"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4"
+        android:ems="10"
+        android:hint="min"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/bReset"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_alignTop="@+id/bSearch"
+        android:layout_toLeftOf="@+id/button9"
+        android:layout_toStartOf="@+id/button9"
+        android:text="@string/reset"
+        tools:layout_editor_absoluteX="211dp"
+        tools:layout_editor_absoluteY="407dp" />
+
+    <Button
+        android:id="@+id/bSearch"
+        android:layout_width="73dp"
+        android:layout_height="41dp"
+        android:layout_alignEnd="@+id/searchplace"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/searchplace"
+        android:layout_marginBottom="38dp"
+        android:text="@string/find"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="79dp"
+        tools:layout_editor_absoluteY="407dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_alignLeft="@+id/searchplace"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignStart="@+id/searchplace"
+        android:layout_below="@+id/textView"
+        android:adjustViewBounds="false"
+        android:background="@drawable/homepage_logo"
+        android:cropToPadding="false"
+        android:foregroundGravity="center"
+        android:scaleType="center"
+        tools:ignore="UnknownId" />
+
+</RelativeLayout>
