@@ -58,7 +58,6 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 
-//####standard generiert########
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -71,7 +70,6 @@ public class LoginActivity extends AppCompatActivity {
     Button registerButton, email_register_button, email_sign_in_button, button;
     ViewGroup mycontent;
 
-    //private static String url = "http://192.168.73.168:17016/fa17g16";
     private static String url = Utils.URL;
 
     @Override
@@ -111,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                     params.put("email", email);
                     params.put("password", password);
                     login(params);
-                }//Ende
+                }
             }
         });
 
@@ -151,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         prgDialog.show();
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-        client.post(url + "user/login", params, new TextHttpResponseHandler() {//url peut devenir parametre
+        client.post(url + "user/login", params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 
@@ -167,8 +165,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 // When Http response code other than 404, 500
                 else {
-                    //DuplicateFormatFlagsException error = null;
-                    //String err = error.getMessage();
                      Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -186,6 +182,7 @@ public class LoginActivity extends AppCompatActivity {
                         // new IntenT
 
                         if(login) {
+                            //login by real_estate activity
                             Intent intent;
                             intent = getIntent();
                             Bundle bundle = intent.getExtras();
@@ -207,7 +204,10 @@ public class LoginActivity extends AppCompatActivity {
                             String seller_id = bundle.getString("seller_id");
                             String realestate_id = bundle.getString("realestate_id");
                             Toast.makeText(getApplicationContext(), "You was successfully logged in", Toast.LENGTH_LONG).show();
-                          if(activity.matches("first")) { intent = new Intent(LoginActivity.this, EstateActivity.class);
+
+                          if(activity.matches("first")) {
+
+                              intent = new Intent(LoginActivity.this, EstateActivity.class);
 
                              intent.putExtra("estate","first");
                              intent.putExtra("equipements", equipementListe);
@@ -245,12 +245,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("pw", password);
                             editor.apply();
 
-
                             startActivity(intent);}
-                            //setContentView(R.layout.activity_main2);
-
-                            //mycontent.addView(View.inflate(LoginActivity.this, R.layout.activity_main2, null));
-
 
                         }else {
                             Toast.makeText(getApplicationContext(), "bad credentiels, try against or first register", Toast.LENGTH_LONG).show();
@@ -264,9 +259,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                 }
 
-
-            }
-            //ende
+            }//fin
 
         });
         Log.i("LoginActivity", params.toString());
