@@ -2,7 +2,9 @@ package com.sfsuse.fa17g16.myandroid;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.util.Patterns;
@@ -108,18 +110,31 @@ public class RegisterActivity extends AppCompatActivity {
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
         //String url = "http://192.168.137.190:17016/fa17g16";
-        client.post(url + "/user/reg", params, new TextHttpResponseHandler() {
-        //client.post(url + "/user/reg/", params, new TextHttpResponseHandler() {
+        client.post(url + "user/reg", params, new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String response) {
                 prgDialog.hide();
 
-                if (statusCode == 201) {
+                if (statusCode == 200) {
+                    try {
+                        JSONObject obj = new JSONObject(response);
+                        Log.i("RegisterActivity", response);
+
                     Toast.makeText(getApplicationContext(), "Your registration was successful", Toast.LENGTH_LONG).show();
-                    setContentView(R.layout.activity_main2);
-                    /*mycontent.removeAllViews();
-                    mycontent.addView(View.inflate(RegisterActivity.this, R.layout.activity_main, null));*/
-                }
+                    //setContentView(R.layout.activity_main2);
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("email", email);
+                    editor.putBoolean("islogged", true);
+                    editor.apply();*/
+
+                    startActivity(intent);
+
+                } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                 }
                 // Else display error message
                 else {
                     Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
@@ -147,7 +162,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         Log.i(TAG, client.toString());
-        Log.i("RegisterActivity", "createUser: ");
         Log.i("RegisterActivity", params.toString());
     }
 
