@@ -58,9 +58,9 @@ public class EstateActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_estate);
-        Intent intent = getIntent();
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_estate);
+         Intent intent = getIntent();
          header = intent.getStringExtra("header");
          size = intent.getStringExtra("size");
          cost = intent.getStringExtra("cost");
@@ -79,8 +79,8 @@ public class EstateActivity extends AppCompatActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(EstateActivity.this);
         login = prefs.getBoolean("islogged", false);
-        email_s=prefs.getString("email","");
-        pw=prefs.getString("pw"," ");
+        email_s = prefs.getString("email", null);
+        pw=prefs.getString("pw", null);
         button = (Button) findViewById(R.id.button3);
 
         if (login) {
@@ -134,25 +134,32 @@ public class EstateActivity extends AppCompatActivity {
         btn_contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+				
+				prefs = PreferenceManager.getDefaultSharedPreferences(EstateActivity.this);
+        login = prefs.getBoolean("islogged", false);
+        email_s = prefs.getString("email", null);
+        pw=prefs.getString("pw", null);
+				
                 // initilize
                 if (!login) {
                     Toast.makeText(getApplicationContext(), "Please Log in before using this function", Toast.LENGTH_LONG).show();
                 } else {
-                    // SharedPreferences.Editor editor = prefs.edit();
+                    //SharedPreferences.Editor editor = prefs.edit();
                     //editor.clear();
                     //editor.apply();
                     //Intent intent = new Intent( MainActivity.this,MainActivity.class);
                     //startActivity(intent);
+
+                    params.put("real_estate", realestate_id);
                     params.put("header", "voila la sauce");
                     params.put("body", "on veut tester");
-                    params.put("real_estate_id", realestate_id);
-                    params.put("receiver_id", realestate_id);
-                    params.put("isAuthenticated()", true);
-                   /* HttpPost clients;
-                    clients=new HttpPost(url+ "user/login");
-                    UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(params);
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    client.post(url + "user/login", params, new TextHttpResponseHandler(){}*/
+
+                    //params.put("receiver_id", realestate_id);
+                    params.put("isAuthenticated()", login);
+					//params.put("login", login);
+					/*params.put("email", email_s);
+					params.put("password", pw);*/
+
                     AsyncHttpClient client = new AsyncHttpClient();
                     client.post(url + "messaging/contactrequest/"+seller_id, params, new TextHttpResponseHandler() {
                                 @Override
@@ -181,6 +188,7 @@ public class EstateActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
         editor.apply();
+        Toast.makeText(getApplicationContext(), "You was successfully logged out", Toast.LENGTH_LONG).show();
         Intent intent = new Intent( EstateActivity.this,MainActivity.class);
         startActivity(intent);
     }else
