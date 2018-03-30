@@ -140,7 +140,6 @@ public class SearchActivity extends AppCompatActivity {
                                 //SearchItem item = (SearchItem)obj;
 
                                 SearchItem item = adapter.getErgebnisListe().get(position);
-                                // intent putExtra()
                                 Intent intent = new Intent(SearchActivity.this, EstateActivity.class);
                                 intent.putExtra("header", item.getHeader());
                                 intent.putExtra("cost", item.getCost());
