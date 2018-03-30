@@ -57,13 +57,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         button = (Button) findViewById(R.id.button3);
-        em=(TextView)findViewById(R.id.textView5);
+        //em=(TextView)findViewById(R.id.textView5);
         prefs= PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-       login=prefs.getBoolean("islogged",false);
-        String emailSa="saaa";
+        login=prefs.getBoolean("islogged",false);
+        /*String emailSa="saaa";
 
         emailSa= emailSa==null?"fonction":prefs.getString("email",null);
-       em.setText(emailSa);
+       em.setText(emailSa);*/
         bSearch = (Button) findViewById(R.id.bSearch);
         if(login){ button.setText("Logout");
 
@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.clear();
                     editor.apply();
+                    Toast.makeText(getApplicationContext(), "You was successfully logged out", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent( MainActivity.this,MainActivity.class);
                     startActivity(intent);
                 }
