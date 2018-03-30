@@ -40,7 +40,6 @@ public class SearchItemsAdapter extends BaseAdapter {
 
     //Un mécanisme pour gérer l'affichage graphique depuis un layout XML
     private LayoutInflater mInflater;
-    //private Uri path;
 
     public SearchItemsAdapter(Context context) {
         mContext = context;
@@ -92,7 +91,7 @@ public class SearchItemsAdapter extends BaseAdapter {
         rooms.setText(ergebnisListe.get(position).getRooms());
         zipcode.setText(ergebnisListe.get(position).getZipcode());
         location.setText(ergebnisListe.get(position).getLocation());
-        //path.setImageURI(ergebnisListe.get(position).getPath());
+
         String imagePath = ergebnisListe.get(position).getFirtImage();
         if(imagePath.length() == 0){
             imageView.setImageResource(R.drawable.homepage_logo);
@@ -107,7 +106,7 @@ public class SearchItemsAdapter extends BaseAdapter {
     public void setResult(JSONArray result) {
         try {
             for (int i = 0; i < result.length(); i++) {
-                //HashMap<String, String> all = new HashMap<>();
+                //get infos
                 JSONObject obj = result.getJSONObject(i);
                 String header = obj.getString("header");
                 String size = obj.getString("size");
@@ -120,22 +119,23 @@ public class SearchItemsAdapter extends BaseAdapter {
                 JSONObject adresse = obj.getJSONObject("adress");
                 String street = adresse.getString("street");
 
-                //zipcode --> Object
+                //getzipcode --> Object
                 JSONObject zipcodeObject = adresse.getJSONObject("zipcode");
                 String zipcode = zipcodeObject.getString("zipcode");
                 String location = zipcodeObject.getString("location");
 
-                //seller
+                //get seller
                 JSONObject sellerObject = obj.getJSONObject("seller");
                 String first_name = sellerObject.getString("first_name");
                 String last_name = sellerObject.getString("last_name");
                 String email = sellerObject.getString("email");
                 String sellerid=sellerObject.getString("id");
                 String realestate_id=" ";
-                //equipment
+
+                //get equipment
                 JSONArray equipmentItem = obj.getJSONArray("equipment");
 
-                //media --> array
+                //get media --> array
                 JSONArray medias = obj.getJSONArray("medias");
                 SearchItem item = new SearchItem(header,cost,size,street,rooms,zipcode,location,description,build_at,first_name,last_name,email,sellerid,realestate_id);
 
@@ -157,7 +157,6 @@ public class SearchItemsAdapter extends BaseAdapter {
                 assert mediasObject != null;
                 String path = mediasObject.getString("path");*/
 
-                //new SearchItem(header, cost, rooms, size, street, zipcode, location, patch);
                 ergebnisListe.add(item);
             }
         } catch (JSONException e) {
