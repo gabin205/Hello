@@ -1,14 +1,23 @@
 package com.sfsuse.fa17g16.myandroid;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,7 +27,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.ResponseHandlerInterface;
 import com.loopj.android.http.TextHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -28,8 +41,9 @@ import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
 import cz.msebera.android.httpclient.client.methods.HttpPost;
 
 public class EstateActivity extends AppCompatActivity {
+    View layout;
     Button button;
-    Button btn_contact;
+    Button btn_contact, btn_send;
     SharedPreferences prefs;
     private boolean login;
     private String url = Utils.URL;
@@ -38,7 +52,7 @@ public class EstateActivity extends AppCompatActivity {
     String cost;
     //Bundle bundle = new Bundle();
 
-    private RequestParams params;
+    RequestParams params;
     ArrayList<String> equipementListe;
     ArrayList<String> imagesListe;
      String rooms;
@@ -54,10 +68,13 @@ public class EstateActivity extends AppCompatActivity {
      String realestate_id;
      String pw;
      String email_s;
+     int user_id;
+    private String headerName;
+    private String headerValue;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_estate);
          Intent intent = getIntent();
@@ -79,8 +96,11 @@ public class EstateActivity extends AppCompatActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(EstateActivity.this);
         login = prefs.getBoolean("islogged", false);
+        user_id = prefs.getInt("user_id", 0);
         email_s = prefs.getString("email", null);
         pw=prefs.getString("pw", null);
+        headerName = prefs.getString(Utils.HEADER_NAME, null);
+        headerValue = prefs.getString(Utils.HEADER_VALUE, null);
         button = (Button) findViewById(R.id.button3);
 
         if (login) {
@@ -105,7 +125,7 @@ public class EstateActivity extends AppCompatActivity {
             linearLayout.addView(imageView);
         }
 
-        TextView v_header = (TextView) findViewById(R.id.header);
+        final TextView v_header = (TextView) findViewById(R.id.header);
         v_header.setText(header);
         TextView v_size = (TextView) findViewById(R.id.size);
         v_size.setText(size);
@@ -135,51 +155,75 @@ public class EstateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 				
-				prefs = PreferenceManager.getDefaultSharedPreferences(EstateActivity.this);
-        login = prefs.getBoolean("islogged", false);
-        email_s = prefs.getString("email", null);
-        pw=prefs.getString("pw", null);
-				
                 // initilize
                 if (!login) {
                     Toast.makeText(getApplicationContext(), "Please Log in before using this function", Toast.LENGTH_LONG).show();
                 } else {
-                    //SharedPreferences.Editor editor = prefs.edit();
-                    //editor.clear();
-                    //editor.apply();
-                    //Intent intent = new Intent( MainActivity.this,MainActivity.class);
-                    //startActivity(intent);
 
-                    params.put("real_estate", realestate_id);
-                    params.put("header", "voila la sauce");
-                    params.put("body", "on veut tester");
+                    //alert Dialog
+                    AlertDialog.Builder builder;
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-                    //params.put("receiver_id", realestate_id);
-                    params.put("isAuthenticated()", login);
-					//params.put("login", login);
-					/*params.put("email", email_s);
-					params.put("password", pw);*/
+                    //View layout = inflater.inflate(R.layout.sendmessage, (ViewGroup) findViewById(R.id.msg_contact));
+                     layout = inflater.inflate(R.layout.sendmessage, null);
 
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    client.post(url + "messaging/contactrequest/"+seller_id, params, new TextHttpResponseHandler() {
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                                    Log.i("result"," voillla");
-                                }
+                    builder = new AlertDialog.Builder(EstateActivity.this);
 
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                                    Log.i("result"," dssss"+params.toString());
-                                }
-                            }
+                    builder.setView(layout);
+                    AlertDialog ppEnviarMsg = builder.create();
+
+                    btn_send = (Button)layout.findViewById(R.id.btn_send);
 
 
-                    );
+                    ppEnviarMsg.show();
 
+                    ppEnviarMsg.getWindow().getAttributes().gravity = Gravity.CENTER;//ende*/
+                    //ppEnviarMsg.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+
+                    btn_send.setOnClickListener(new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        EditText v_boddy = (EditText)layout.findViewById(R.id.v_boddy);
+                                                        EditText v_header = ((EditText)layout.findViewById(R.id.v_header));
+                                                        String g_boddy = v_boddy.getText().toString().trim();
+                                                        String g_header = v_header.getText().toString().trim();
+                                                        RequestParams params = new RequestParams();
+                                                        params.put("real_estate", realestate_id);
+                                                        params.put("header", g_header);
+                                                        params.put("body", g_boddy);
+                                                        params.put("sender_id", user_id);
+                                                        contactMsg(params);
+                                                    }
+                                                });
                 }
             }
+
         });
     }
+
+        public void contactMsg(RequestParams params){
+
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.addHeader(headerName, headerValue);
+            client.post(url + "messaging/contactrequest/android/"+seller_id, params, new TextHttpResponseHandler() {
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_LONG).show();
+                    Log.i("result","body: "+responseString);
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
+                        Toast.makeText(getApplicationContext(), "your message was successfull sended", Toast.LENGTH_LONG).show();
+
+                }
+            });
+        }
+
+
         /** Called when the user taps the Login button */
 
     public void goToLogin(View view) {
