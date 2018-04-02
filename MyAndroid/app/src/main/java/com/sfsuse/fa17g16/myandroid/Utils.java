@@ -8,4 +8,9 @@ public class Utils {
     public static final String HOST = "192.168.137.66"; //192.168.43.174
     public static final String URL = "http://"+HOST+":17016/fa17g16/";
 
+
+    // cookies
+    public static final String HEADER_NAME = "set-cookie-name";
+    public static final String HEADER_VALUE = "set-cookie-value";
+
 }
