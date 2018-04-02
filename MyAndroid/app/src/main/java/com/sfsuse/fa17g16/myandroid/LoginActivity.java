@@ -179,6 +179,7 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject obj = new JSONObject(response);
                         Boolean login = obj.getBoolean("login");
                         String message = obj.getString("message");
+                        int user_id = obj.getInt("user_id");
                         // new IntenT
 
                         if(login) {
@@ -209,8 +210,8 @@ public class LoginActivity extends AppCompatActivity {
 
                               intent = new Intent(LoginActivity.this, EstateActivity.class);
 
-                             intent.putExtra("estate","first");
-                             intent.putExtra("equipements", equipementListe);
+                              intent.putExtra("estate","first");
+                              intent.putExtra("equipements", equipementListe);
                               intent.putExtra("images",imagesListe );
                               intent.putExtra("header", header);
                               intent.putExtra("cost", cost);
@@ -232,6 +233,9 @@ public class LoginActivity extends AppCompatActivity {
                               editor.putString("email",email);
                               editor.putBoolean("islogged",login);
                               editor.putString("pw", password);
+                              editor.putInt("user_id", user_id);
+                              editor.putString(Utils.HEADER_NAME, headers[9].getName());
+                              editor.putString(Utils.HEADER_VALUE, headers[9].getValue());
                               editor.apply();
                               startActivity(intent);
                           }
