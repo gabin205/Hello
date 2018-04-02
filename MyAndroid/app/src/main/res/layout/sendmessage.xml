@@ -3,19 +3,19 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ppc_llContact"
+    android:id="@+id/msg_contact"
     android:orientation="vertical"
     android:gravity="center">
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="send_message"
+        android:text="send message"
         tools:textSize="24sp"
         android:layout_margin="4dp"/>
 
     <EditText
-        android:id="@+id/header"
+        android:id="@+id/v_header"
         android:hint="Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
     </EditText>
 
     <EditText
-        android:id="@+id/boddy"
+        android:id="@+id/v_boddy"
         android:hint="Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:lines="5">
     </EditText>
 
-    <Button android:id="@+id/ppc_btEnviar"
+    <Button android:id="@+id/btn_send"
         android:text="send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
