@@ -20,20 +20,24 @@
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button3"
-        android:layout_alignBottom="@+id/button3"
+        android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/imageButton2"
+        android:layout_toLeftOf="@+id/button9"
         android:layout_toRightOf="@+id/imageButton2"
-        android:text="@string/Home" />
+        android:layout_toStartOf="@+id/button9"
+        android:onClick="goToDashboard"
+        android:text="@string/Home"
+        />
 
     <Button
         android:id="@+id/button9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button8"
-        android:layout_alignBottom="@+id/button8"
-        android:layout_centerHorizontal="true"
-        android:text="@string/Agencies" />
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/button3"
+        android:layout_toStartOf="@+id/button3"
+        android:text="@string/Agencies"
+         />
 
     <Button
         android:id="@+id/button3"
@@ -43,11 +47,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/button9"
-        android:layout_toRightOf="@+id/button9"
         android:onClick="goToLogin"
         android:text="@string/myhomepage"
-        tools:ignore="RelativeOverlap" />
+         />
 
     <TextView
         android:id="@+id/textView"
@@ -67,8 +69,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/searchplace"
-        android:layout_alignEnd="@+id/button9"
-        android:layout_alignRight="@+id/button9"
+        android:layout_alignLeft="@+id/bReset"
+        android:layout_alignStart="@+id/bReset"
         android:text="@string/where_do_you_search" />
 
     <EditText
@@ -76,8 +78,8 @@
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_above="@+id/textView3"
-        android:layout_alignLeft="@+id/bReset"
-        android:layout_alignStart="@+id/bReset"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignStart="@+id/textView3"
         android:layout_marginBottom="13dp"
         android:ems="10"
         android:hint="Enter Zipcode"
@@ -89,11 +91,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/maxCost"
-        android:layout_alignEnd="@+id/button8"
-        android:layout_alignRight="@+id/button8"
-        android:layout_marginBottom="26dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginBottom="13dp"
+        android:layout_toEndOf="@+id/imageButton2"
+        android:layout_toRightOf="@+id/imageButton2"
         android:text="@string/price_range" />
 
     <EditText
@@ -103,7 +103,7 @@
         android:layout_above="@+id/minCost"
         android:layout_alignLeft="@+id/textView3"
         android:layout_alignStart="@+id/textView3"
-        android:layout_marginBottom="11dp"
+        android:layout_marginBottom="17dp"
         android:ems="10"
         android:hint="max"
         android:inputType="number" />
@@ -113,9 +113,9 @@
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_above="@+id/bReset"
-        android:layout_alignEnd="@+id/button8"
-        android:layout_alignRight="@+id/button8"
-        android:layout_marginBottom="27dp"
+        android:layout_alignLeft="@+id/maxCost"
+        android:layout_alignStart="@+id/maxCost"
+        android:layout_marginBottom="28dp"
         android:ems="10"
         android:hint="min"
         android:inputType="number" />
@@ -124,10 +124,9 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
         android:layout_alignLeft="@+id/maxSpace"
         android:layout_alignStart="@+id/maxSpace"
+        android:layout_below="@+id/searchplace"
         android:text="@string/living_space_range" />
 
     <EditText
@@ -148,8 +147,8 @@
         android:layout_height="40dp"
         android:layout_alignBaseline="@+id/minCost"
         android:layout_alignBottom="@+id/minCost"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4"
+        android:layout_alignLeft="@+id/maxSpace"
+        android:layout_alignStart="@+id/maxSpace"
         android:ems="10"
         android:hint="min"
         android:inputType="number" />
@@ -159,9 +158,9 @@
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="42dp"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_alignRight="@+id/textView3"
         android:layout_alignTop="@+id/bSearch"
-        android:layout_toLeftOf="@+id/button9"
-        android:layout_toStartOf="@+id/button9"
         android:text="@string/reset"
         tools:layout_editor_absoluteX="211dp"
         tools:layout_editor_absoluteY="407dp" />
@@ -170,10 +169,10 @@
         android:id="@+id/bSearch"
         android:layout_width="73dp"
         android:layout_height="41dp"
-        android:layout_alignEnd="@+id/searchplace"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/searchplace"
-        android:layout_marginBottom="38dp"
+        android:layout_marginBottom="36dp"
+        android:layout_toLeftOf="@+id/button3"
+        android:layout_toStartOf="@+id/button3"
         android:text="@string/find"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
         android:visibility="visible"
