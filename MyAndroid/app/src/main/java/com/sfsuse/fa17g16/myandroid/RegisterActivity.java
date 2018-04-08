@@ -69,10 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                 password = ((EditText) findViewById(R.id.password)).getText().toString().trim();
                 // password wird gehasht
                 //String hspwd = rg.generateHash(password);
-                Log.i(TAG, "first_name: : "+first_name);
-                Log.i(TAG, "last_name: : "+last_name);
-                Log.i(TAG, "email: : "+email);
-                Log.i(TAG, "password: : "+password);
+
                 RequestParams params = new RequestParams();
                 //check the input of form
 
@@ -85,12 +82,12 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),
                                 "Please wait for register", Toast.LENGTH_LONG)
                                 .show();
-                        prgDialog = new ProgressDialog(RegisterActivity.this);
+                        /*prgDialog = new ProgressDialog(RegisterActivity.this);
                         // Set Progress Dialog Text
                         prgDialog.setMessage("Please wait...");
                         // Set Cancelable as False
                         prgDialog.setCancelable(false);
-                        prgDialog.show();
+                        prgDialog.show();*/
                         // creating new user
                         params.put("first_name", first_name);
                         params.put("last_name", last_name);
@@ -104,21 +101,22 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
     public void createUser(RequestParams params) {
-        // Show Progress Dialog
 
-        prgDialog.show();
+        Boolean isOnSuccess = false;
+
+
         // Make RESTful webservice call using AsyncHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-        //String url = "http://192.168.137.190:17016/fa17g16";
         client.post(url + "user/reg", params, new TextHttpResponseHandler() {
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, String response) {
-                prgDialog.hide();
+                //prgDialog.hide();
 
-                if (statusCode == 200) {
+                    //isOnSuccess = true;
                     try {
-                        JSONObject obj = new JSONObject(response);
-                        Log.i("RegisterActivity", response);
+                        /*JSONObject obj = new JSONObject(response);
+                        Log.i("RegisterActivity", response);*/
 
                     Toast.makeText(getApplicationContext(), "Your registration was successful", Toast.LENGTH_LONG).show();
                     //setContentView(R.layout.activity_main2);
@@ -131,21 +129,17 @@ public class RegisterActivity extends AppCompatActivity {
 
                     startActivity(intent);
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                         e.printStackTrace();
                     }
-                 }
+
                 // Else display error message
-                else {
-                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String response, Throwable error) {
                 // Hide Progress Dialog
-                prgDialog.hide();
-                //Log.i(TAG, client.toString());
+                //prgDialog.hide();
                 // When Http response code is '404'
                 if (statusCode == 404) {
                     Toast.makeText(getApplicationContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
@@ -161,6 +155,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+        if(isOnSuccess){
+            Toast.makeText(getApplicationContext(), "Your registration was successful", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
         Log.i(TAG, client.toString());
         Log.i("RegisterActivity", params.toString());
     }
