@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                 else if (statusCode == 500) {
                     Toast.makeText(getApplicationContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
                 }
-                // When Http response code other than 404, 500
+
                 else {
                      Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
                 }
@@ -180,6 +180,7 @@ public class LoginActivity extends AppCompatActivity {
                         Boolean login = obj.getBoolean("login");
                         String message = obj.getString("message");
                         int user_id = obj.getInt("user_id");
+
                         // new IntenT
 
                         if(login) {
