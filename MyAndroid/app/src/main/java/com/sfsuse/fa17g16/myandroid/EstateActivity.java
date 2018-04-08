@@ -43,7 +43,7 @@ import cz.msebera.android.httpclient.client.methods.HttpPost;
 public class EstateActivity extends AppCompatActivity {
     View layout;
     Button button;
-    Button btn_contact, btn_send;
+    Button btn_contact, btn_send, btn_home;
     SharedPreferences prefs;
     private boolean login;
     private String url = Utils.URL;
@@ -94,6 +94,7 @@ public class EstateActivity extends AppCompatActivity {
          realestate_id = intent.getStringExtra("realestate_id");
          params=new RequestParams();
 
+        //call isLogin User
         prefs = PreferenceManager.getDefaultSharedPreferences(EstateActivity.this);
         login = prefs.getBoolean("islogged", false);
         user_id = prefs.getInt("user_id", 0);
@@ -200,6 +201,14 @@ public class EstateActivity extends AppCompatActivity {
             }
 
         });
+
+        btn_home = (Button) findViewById(R.id.button8);
+        if(login){ btn_home.setText("Dashboard");
+
+        }
+        else {
+            btn_home.setText("HOME");
+        }
     }
 
         public void contactMsg(RequestParams params){
@@ -216,8 +225,13 @@ public class EstateActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    if (statusCode==302) {
 
                         Toast.makeText(getApplicationContext(), "your message was successfull sended", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_LONG).show();
+                    }
 
                 }
             });
@@ -258,6 +272,19 @@ public class EstateActivity extends AppCompatActivity {
             bundle.putString("realestate_id", realestate_id);
             intent.putExtras(bundle);
         startActivity(intent);
+        }
+    }
+
+    public void goToDashboard (View view){
+        if(login) {
+            if(login){ btn_home.setText("Dashboard");
+                //SharedPreferences.Editor editor = prefs.edit();
+                Intent intent = new Intent( EstateActivity.this,DashboardActivity.class);
+                startActivity(intent);
+            }
+        } else{
+            Intent intent = new Intent(EstateActivity.this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
