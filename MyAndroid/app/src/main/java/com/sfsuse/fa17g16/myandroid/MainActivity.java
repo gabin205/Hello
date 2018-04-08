@@ -40,7 +40,7 @@ import static java.lang.String.valueOf;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button bSearch, bReset, button;
+    Button bSearch, bReset, button, btn_home;
     SharedPreferences prefs;
     private static String url = Utils.URL;
     String maxSpace, minSpace, minCost, maxCost;
@@ -127,6 +127,16 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //Ende
         });
+
+        btn_home = (Button) findViewById(R.id.button8);
+        if(login){
+            btn_home.setText("Dashboard");
+        }
+        else {
+            btn_home.setText("HOME");
+
+        }
+
 }
 
         /** Called when the user taps the Login button */
@@ -147,6 +157,28 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+
+        public void goToDashboard (View view){
+            if(login) {
+                if(login){ btn_home.setText("Dashboard");
+                    SharedPreferences.Editor editor = prefs.edit();
+                    Intent intent = new Intent( MainActivity.this,DashboardActivity.class);
+                    startActivity(intent);
+                }
+            } else{
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+    }
+
+
+
+        /*TextView v_textView = (TextView) findViewById(R.id.textView);
+        if(login){
+            if(login){
+                v_textView.setText(v_textView +"");
+            }
+    }*/
 
 }
 
