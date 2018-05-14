@@ -61,8 +61,6 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends AppCompatActivity {
 
-
-    // UI references.
     String email;
     String password;
     View login_progress, login_form;
@@ -126,25 +124,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    /*private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
-    }*/
-
-    //ende
-
     /**
      * Shows the progress UI and hides the login form.
      */
 
     public void login(RequestParams params) {
-//     FunctionLogin logion= new  FuntionLogin()
-// TODO: attempt authentication against a network service.
         // Show Progress Dialog
         prgDialog.show();
         // Make RESTful webservice call using AsyncHttpClient object
@@ -236,7 +220,7 @@ public class LoginActivity extends AppCompatActivity {
                               editor.putInt("user_id", user_id);
                               editor.putString(Utils.HEADER_NAME, headers[9].getName());
                               editor.putString(Utils.HEADER_VALUE, headers[9].getValue());
-                              editor.apply();
+                              editor.commit();
                               startActivity(intent);
                           }
                           else{
@@ -247,6 +231,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("email", email);
                             editor.putBoolean("islogged", login);
                             editor.putString("pw", password);
+                            editor.putInt("user_id", user_id);
                             editor.apply();
 
                             startActivity(intent);}

@@ -44,7 +44,6 @@ import static java.lang.String.valueOf;
 public class RegisterActivity extends AppCompatActivity {
     public static String TAG = "RegisterActivity";
 
-    //static String url = "http://192.168.73.168:17016/fa17g16";
     private static String url = Utils.URL;
 
     Button email_register_button;
@@ -115,26 +114,15 @@ public class RegisterActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, String response) {
                 prgDialog.hide();
 
-                if (statusCode == 200) {
-                    try {
-                        JSONObject obj = new JSONObject(response);
-                        Log.i("RegisterActivity", response);
+                if (statusCode == 302) {
 
                     Toast.makeText(getApplicationContext(), "Your registration was successful", Toast.LENGTH_LONG).show();
                     //setContentView(R.layout.activity_main2);
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                    /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(RegisterActivity.this);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("email", email);
-                    editor.putBoolean("islogged", true);
-                    editor.apply();*/
 
-                    startActivity(intent);
+                    startActivity(intent);}
 
-                } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                 }
+
                 // Else display error message
                 else {
                     Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();

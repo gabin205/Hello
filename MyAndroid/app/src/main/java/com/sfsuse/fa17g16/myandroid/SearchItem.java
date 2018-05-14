@@ -106,7 +106,7 @@ public class SearchItem {
     }
 
     public void addMedia(String path) {
-        //to remove this line in live system "localhost"
+
         String image = path.replace("localhost", Utils.HOST);
         mediaListe.add(image);
     }

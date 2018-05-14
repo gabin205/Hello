@@ -38,8 +38,7 @@ public class SearchActivity extends AppCompatActivity {
  public static final String MAX_COST = "maxCost";
     Button button;
     ProgressDialog prgDialog;
-    //private static String url = "http://192.168.43.174:17016/fa17g16/";
-    private static String url = Utils.URL;//"http://192.168.137.89:17016/fa17g16/";
+    private static String url = Utils.URL;
     private String adresse;
     private ViewGroup mycontent;
     private ListView List;
@@ -72,24 +71,15 @@ public class SearchActivity extends AppCompatActivity {
         // Set Cancelable as False
         prgDialog.setCancelable(false);
         prgDialog.show();
-        // build jason
-        ////  tu va build le djson differement
+        // build json
         params.put("maxCost", maxCost);
         params.put("minCost", minCost);
         params.put("maxSpace", maxSpace);
         params.put("minSpace", minSpace);
         params.put("searchplace", searchplace);
-        //la c est une fontiction qui te  une requete
         search(params);
 
     }
-
-    /** Called when the user taps the Login button */
-    /*public void goToLogin(View view) {
-        Intent intent = new Intent(SearchActivity.this, LoginActivity.class);
-        button = (Button) findViewById(R.id.button4);
-        startActivity(intent);
-    }*/
 
 
     //search function
@@ -101,10 +91,8 @@ public class SearchActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.i("MainActivity", "response: " + responseString);
 
-                // Hide Progress Dialog
                 prgDialog.hide();
-//                DuplicateFormatFlagsException error = throwable.;
-//                String err = error.getMessage();
+
                 Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
             }
 
@@ -117,16 +105,13 @@ public class SearchActivity extends AppCompatActivity {
                     JSONObject resultObjects = new JSONObject(response);
                     JSONObject realObject = resultObjects.getJSONObject("data");
 
-                 //Toast.makeText(getApplicationContext(), equipments.get(0).toString(), Toast.LENGTH_LONG).show();
-                    //Toast.makeText(getApplicationContext(),data.get(0).toString() , Toast.LENGTH_LONG).show();
                     if (resultObjects.length() == 0 || realObject.length() == 0) {
                         String rps = "Sorry! There are No results for yours query.";
                         Toast.makeText(getApplicationContext(), rps, Toast.LENGTH_LONG).show();
                     } else {
                         JSONArray equipments = realObject.getJSONArray("equipments");
                         JSONArray result = realObject.getJSONArray("result");
-                        //JSONArray formData = realObject.getJSONArray("formdata");
-                        //JSONArray data = realObject.getJSONArray("data");
+
                         adapter.setResult(result);
                         ListView listView = (ListView) findViewById(R.id.simpleListView);
 
@@ -135,10 +120,8 @@ public class SearchActivity extends AppCompatActivity {
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                // intent pour ouvrir les details
-                                //Object obj = ((ListView)parent).getItemAtPosition(position);
-                                //SearchItem item = (SearchItem)obj;
 
+                                // intent pour ouvrir les details
                                 SearchItem item = adapter.getErgebnisListe().get(position);
                                 Intent intent = new Intent(SearchActivity.this, EstateActivity.class);
                                 intent.putExtra("header", item.getHeader());

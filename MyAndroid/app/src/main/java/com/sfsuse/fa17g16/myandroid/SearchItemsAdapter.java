@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  */
 
 public class SearchItemsAdapter extends BaseAdapter {
-    // Une liste de Maison
+    // List of our home
     private List<SearchItem> ergebnisListe;
 
     //Le contexte dans lequel est présent notre adapter
@@ -72,7 +72,7 @@ public class SearchItemsAdapter extends BaseAdapter {
             layoutItem = (LinearLayout) convertView;
         }
 
-        //(2) : Récupération des TextView de notre layout
+        // get all TextView of our searchItemlayout
         TextView header = (TextView)layoutItem.findViewById(R.id.header);
         TextView cost = (TextView)layoutItem.findViewById(R.id.cost);
         TextView size = (TextView)layoutItem.findViewById(R.id.size);
@@ -132,7 +132,7 @@ public class SearchItemsAdapter extends BaseAdapter {
                 String sellerid=sellerObject.getString("id");
                 String realestate_id=" ";
 
-                //get equipment
+                //get equipment --> array
                 JSONArray equipmentItem = obj.getJSONArray("equipment");
 
                 //get media --> array
